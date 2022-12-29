@@ -4,16 +4,16 @@ import pyttsx3
 import pywhatkit
 import urllib.request
 import json
-import datetime
+from datetime import datetime
 import wikipedia
 
-name = "jarvis"
-key = "AIzaSyCty8voJPe3YqveBfbvujP0m-eLzIMc6v0"
+name = "cortana"
+key = "AIzaSyBPyCeyEu5E5keMf3u3IICfCxmkB6DwlIY"
 
 listener = sr.Recognizer()
 engine = pyttsx3.init()#se inicializa el paquete
 voices = engine.getProperty("voices")#obener listado de voces disponibles
-engine.setProperty("voice", voices[1].id)#elegir una voz
+engine.setProperty("voice", voices[0].id)#elegir una voz
 
 def talk(text):
     engine.say(text)
@@ -26,7 +26,7 @@ def listen():
         with sr.Microphone() as source:
             print("Escuchando...")
             voice = listener.listen(source)#escucha la info de la fuente <source>
-            rec = listener.recognize_google(voice,languaje="es-Es")#con la api de google almacena lo escuchado en una lista string
+            rec = listener.recognize_google(voice)
             rec = rec.lower()#todo a minusculas
             if name in rec:#elimina el nombre del asistente y muestra el mensaje
                 rec = rec.replace(name,"")
@@ -34,7 +34,8 @@ def listen():
                 print(rec)
     except:
         pass
-    return rec#devolvemos la cadena con lo que hablamos
+    return rec
+    #devolvemos la cadena con lo que hablamos
 
 
 def run():
@@ -45,20 +46,28 @@ def run():
         pywhatkit.playonyt(music)
 
     #cuantos suscriptores tiene x youtuber
+    """
     if "cuantos suscriptores tiene" in rec:
+        rec = rec.replace(" ","")
         name_subs = rec.replace("cuantos suscriptores tiene","")
         data = urllib.request.urlopen("https://www.googleapis.com/youtube/v3/channels?part=statistics&forUsername="+name_subs.strip()+'&key='+key).read()
         subs = json.loads(data)["items"][0]["statistics"]["subscriberCount"]
         talk(name_subs + " tiene {:,d}".format(int(subs)) +" suscriptores ")
+    """
 
     if "hora" in rec:
-        hora = datetime.datetime().now().strftime("%I:%M %p")
+        #hora = datetime.now().strftime("%I:%M %p")
+        hora = datetime.now().strftime("%H:%M %S")
         talk("Son las " + hora)
+
 
     if "busca" in rec:
         order = rec.replace("busca","")
         info = wikipedia.summary(order,1)
         talk(info)
+
+    if "amazon" in rec:
+        webbrowser.open("https://amazon.com")
 
 run()
 
