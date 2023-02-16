@@ -45,15 +45,6 @@ def run():
         talk("Reproduciendo " + music)
         pywhatkit.playonyt(music)
 
-    #cuantos suscriptores tiene x youtuber
-    """
-    if "cuantos suscriptores tiene" in rec:
-        rec = rec.replace(" ","")
-        name_subs = rec.replace("cuantos suscriptores tiene","")
-        data = urllib.request.urlopen("https://www.googleapis.com/youtube/v3/channels?part=statistics&forUsername="+name_subs.strip()+'&key='+key).read()
-        subs = json.loads(data)["items"][0]["statistics"]["subscriberCount"]
-        talk(name_subs + " tiene {:,d}".format(int(subs)) +" suscriptores ")
-    """
 
     if "hora" in rec:
         #hora = datetime.now().strftime("%I:%M %p")
