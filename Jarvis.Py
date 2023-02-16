@@ -25,6 +25,7 @@ def listen():
     try:
         with sr.Microphone() as source:
             print("Escuchando...")
+            listener.adjust_for_ambient_noise(source)
             voice = listener.listen(source)#escucha la info de la fuente <source>
             rec = listener.recognize_google(voice)
             rec = rec.lower()#todo a minusculas
