@@ -61,6 +61,12 @@ def run():
     if "amazon" in rec:
         webbrowser.open("https://amazon.com")
 
+    if "wikipedia" in rec:
+        webbrowser.open("https://es.wikipedia.org/wiki/Wikipedia")
+
+    if "fender" in rec:
+        webbrowser.open("https://www.fender.com/es/start")
+
 run()
 
 
